@@ -106,6 +106,14 @@ test_tsql_alternate_alias_syntax:
     core:
       dialect: tsql
 
+test_tsql_select_into_parameter:
+  pass_str: |
+    select
+      @param1 = null, @param2 = 5
+  configs:
+    core:
+      dialect: tsql
+
 test_exclude_constraint:
   pass_str: |
     alter table abc add constraint xyz exclude (field WITH =);

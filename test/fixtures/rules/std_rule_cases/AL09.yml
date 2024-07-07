@@ -96,3 +96,12 @@ test_pass_self_alias_case_sensitive:
             col_a as "col_a",
             col_b as new_col_b
         from foo
+
+test_tsql_select_into_parameter_is_not_alias:
+  pass_str: |
+    select
+      @param = foo.id
+    from foo
+  configs:
+    core:
+      dialect: tsql

@@ -9,3 +9,7 @@ from
 	mydb.myschema.customer c
 where
 	c.name = 'drjwelch';
+
+select @userid = 12;
+
+select @empty = NULL;
