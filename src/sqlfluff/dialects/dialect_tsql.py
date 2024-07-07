@@ -738,6 +738,18 @@ class NotEqualToSegment(CompositeComparisonOperatorSegment):
         Sequence(Ref("RawLessThanSegment"), Ref("RawGreaterThanSegment")),
     )
 
+class SelectAssignParameterSegment(BaseSegment):
+    """A `SELECT @parameter = value` statement."""
+
+    # https://learn.microsoft.com/en-us/sql/t-sql/language-elements/select-local-variable-transact-sql?view=sql-server-ver16
+
+    type = "select_assign_parameter_segment"
+
+    match_grammar: Matchable = Sequence(
+        Ref("ParameterNameSegment"),
+        Ref("AssignmentOperatorSegment"),
+        Ref("ExpressionSegment"),
+    )
 
 class SelectClauseElementSegment(ansi.SelectClauseElementSegment):
     """An element in the targets of a select statement.
@@ -750,6 +762,7 @@ class SelectClauseElementSegment(ansi.SelectClauseElementSegment):
     match_grammar = OneOf(
         # *, blah.*, blah.blah.*, etc.
         Ref("WildcardExpressionSegment"),
+        Ref("SelectAssignParameterSegment"),
         Sequence(
             Ref("AltAliasExpressionSegment"),
             Ref("BaseExpressionElementGrammar"),
